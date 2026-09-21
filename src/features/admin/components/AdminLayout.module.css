@@ -1,0 +1,167 @@
+/* Admin shell. The sidebar is separated from content by a hard vertical
+   border rather than a shadow or tint — consistent with the flat,
+   drawn-edges language, and it keeps the admin area feeling like a tool
+   rather than a marketing surface. */
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  background: var(--color-bg);
+}
+
+.sidebar {
+  background: var(--color-surface-raised);
+  border-right: var(--border-strong-thick);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-5) var(--space-3);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-5);
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.navLink,
+.navLinkActive {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 9px var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  border: var(--border-width) solid transparent;
+}
+
+.navLink {
+  color: var(--color-text-primary);
+}
+
+.navLink:hover {
+  background: var(--color-surface);
+  border-color: var(--color-ink);
+}
+
+/* Active page: solid ink fill rather than accent. In a sidebar of ten
+   items the accent would be doing decorative work; ink reads as
+   "you are here" without adding a color to the screen. */
+.navLinkActive {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+
+.footer {
+  border-top: var(--border-strong);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.exitLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px var(--space-3);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.exitLink:hover {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.userBlock {
+  padding: var(--space-3) var(--space-3) 0;
+}
+
+.userName {
+  font-size: 12.5px;
+  font-weight: 700;
+  margin: 0 0 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userRole {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.signOutButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: var(--space-3);
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-sm);
+  border: var(--border-width) solid transparent;
+  background: none;
+  color: var(--color-danger);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.signOutButton:hover {
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
+}
+
+.content {
+  min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: var(--border-strong-thick);
+  }
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: visible;
+  }
+  .footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    border-top: none;
+    margin-top: var(--space-3);
+  }
+  .userBlock {
+    padding: 0;
+  }
+}

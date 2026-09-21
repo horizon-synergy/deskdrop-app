@@ -1,0 +1,131 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+  padding: var(--space-7) var(--space-6);
+}
+
+.header {
+  max-width: 1080px;
+  margin: 0 auto var(--space-5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.filterToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.errorText {
+  max-width: 1080px;
+  margin: 0 auto var(--space-4);
+  font-size: 13.5px;
+  color: var(--color-danger);
+}
+
+.emptyState {
+  max-width: 1080px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--color-surface-raised);
+  border: var(--border-width) dashed var(--color-ink);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-brutal);
+  font-size: 13.5px;
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: var(--border-strong-thick);
+  background: var(--color-surface);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-strong);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.mutedCell {
+  color: var(--color-text-secondary);
+}
+
+.quantityLow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.actionsCell {
+  text-align: right;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-sm);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press);
+}
+
+.actionButton:hover:not(:disabled) {
+  background: var(--color-surface);
+}
+
+.actionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

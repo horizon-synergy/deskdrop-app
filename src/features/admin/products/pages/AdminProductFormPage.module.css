@@ -1,0 +1,85 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+  padding: var(--space-7) var(--space-4);
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 640px;
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  box-shadow: var(--shadow-sm);
+  height: fit-content;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-5);
+}
+
+.errorText {
+  font-size: 14px;
+  color: var(--color-danger);
+}
+
+.categoryFieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+
+.categoryLegend {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 0 8px;
+}
+
+.mutedText {
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 12px;
+}
+
+.categoryOption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.cancelButton {
+  padding: 11px var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .categoryGrid {
+    grid-template-columns: 1fr;
+  }
+}

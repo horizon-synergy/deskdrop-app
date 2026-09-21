@@ -1,0 +1,34 @@
+/* Loading state. A spinning ring with a blurred trail would clash with
+   the flat aesthetic, so this is a hard-bordered square that rotates —
+   solid, geometric, and unmistakably part of the same system. */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 60vh;
+  background: transparent;
+}
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: var(--border-strong-thick);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  animation: spin 1s steps(8, end) infinite;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  letter-spacing: -0.01em;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

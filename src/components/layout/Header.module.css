@@ -1,0 +1,104 @@
+/* Storefront header. The whole bar sits on a hard bottom border rather
+   than a translucent blur — blur is a soft-UI signature and was removed
+   throughout. Sticky is retained so the cart stays reachable. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-surface-raised);
+  border-bottom: var(--border-strong-thick);
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Wordmark carries the heaviest weight in the app — it's the one place
+   maximal type is appropriate. */
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.navLink {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: var(--border-width) solid transparent;
+}
+
+.navLink:hover {
+  border-bottom-color: var(--color-ink);
+}
+
+/* Admin entry point: a bordered chip so staff can spot it instantly,
+   but neutral-filled rather than accent-filled — the accent is reserved
+   for primary customer actions, not internal navigation. */
+.adminLink {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: var(--border-strong);
+  padding: 5px var(--space-3);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press);
+}
+
+.adminLink:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+.iconLink {
+  color: var(--color-text-primary);
+  display: flex;
+}
+
+.cartButton {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  display: flex;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Count badge is one of the few places the accent appears in the header,
+   and it's earned: it's live, changing information the shopper needs. */
+.cartBadge {
+  position: absolute;
+  top: -7px;
+  right: -9px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid var(--color-ink);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

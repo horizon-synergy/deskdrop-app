@@ -1,0 +1,200 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.errorText {
+  max-width: 1120px;
+  margin: var(--space-6) auto;
+  padding: 0 var(--space-6);
+  color: var(--color-danger);
+  font-size: 14px;
+}
+
+.layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-7);
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mainImage {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.thumbRow {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.details {
+  padding-top: var(--space-2);
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-2);
+}
+
+.wishlistButton {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.wishlistIconActive {
+  color: var(--color-danger);
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4);
+}
+
+.description {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-6);
+  white-space: pre-wrap;
+}
+
+.variantLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.variantPicker {
+  margin-bottom: var(--space-5);
+}
+
+.variantOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.variantButton,
+.variantButtonActive {
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.variantButton {
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+}
+
+.variantButtonActive {
+  border: var(--border-strong);
+  background: var(--color-text-primary);
+  color: var(--color-on-accent);
+}
+
+.quantityRow {
+  margin-bottom: var(--space-6);
+}
+
+.quantityControl {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  border: var(--border-strong);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+}
+
+.quantityControl button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+}
+
+.addToCartButton {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.addToCartButton:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.addToCartButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addedMessage {
+  margin: var(--space-3) 0 0;
+  font-size: 13px;
+  color: var(--color-success);
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

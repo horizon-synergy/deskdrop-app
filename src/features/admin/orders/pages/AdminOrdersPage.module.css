@@ -1,0 +1,157 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+  padding: var(--space-7) var(--space-6);
+}
+
+.header {
+  max-width: 1080px;
+  margin: 0 auto var(--space-4);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.filterGroup {
+  max-width: 1080px;
+  margin: 0 auto var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filterButton,
+.filterButtonActive {
+  padding: 7px var(--space-3);
+  border-radius: var(--radius-full);
+  border: var(--border-strong);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filterButton {
+  background: var(--color-surface-raised);
+  color: var(--color-text-secondary);
+}
+
+.filterButtonActive {
+  background: var(--color-ink);
+  color: var(--color-on-accent);
+  border-color: var(--color-text-primary);
+}
+
+.errorText {
+  max-width: 1080px;
+  margin: 0 auto var(--space-4);
+  font-size: 13.5px;
+  color: var(--color-danger);
+}
+
+.emptyState {
+  max-width: 1080px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--color-surface-raised);
+  border: var(--border-width) dashed var(--color-ink);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-brutal);
+  font-size: 13.5px;
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: var(--border-strong-thick);
+  background: var(--color-surface);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-strong);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.mutedCell {
+  color: var(--color-text-secondary);
+}
+
+.status_pending_payment,
+.status_paid,
+.status_processing,
+.status_shipped,
+.status_delivered,
+.status_cancelled,
+.status_refunded {
+  font-size: 11.5px;
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid var(--color-ink);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status_pending_payment {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+}
+.status_paid,
+.status_processing,
+.status_shipped {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+.status_delivered {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+.status_cancelled,
+.status_refunded {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+.actionsCell {
+  text-align: right;
+}
+
+.statusSelect {
+  padding: 6px var(--space-2);
+  border-radius: var(--radius-sm);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  font-size: 12.5px;
+}

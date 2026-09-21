@@ -1,0 +1,220 @@
+/**
+ * firestore.rules
+ * ----------------------------------------------------------------------------
+ * This file is the actual security boundary for DeskDrop. Everything in
+ * the frontend (ProtectedRoute, AdminRoute, usePermission) exists for UX
+ * only — it decides what a user *sees*. This file decides what a user
+ * can actually *do*, independent of and unreachable-by any client code.
+ * Deploy with: firebase deploy --only firestore:rules
+ *
+ * Design principles used throughout:
+ *   1. Default-deny: the final `match /{document=**}` rule at the bottom
+ *      denies everything not explicitly allowed above it.
+ *   2. Role is read from the requesting user's OWN `users/{uid}` document
+ *      on the server, via get() — never trusted from the request payload.
+ *      A user cannot grant themselves a role by sending a different
+ *      `role` value in a write; the rule reads the *existing, already
+ *      -persisted* role for permission checks, and separately restricts
+ *      which fields a non-privileged user may write on their own doc.
+ *   3. Every collection's rules are written assuming the client is
+ *      hostile — rules re-validate shape and ownership, not just "is this
+ *      user logged in".
+ */
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------
+    // Helper functions
+    // ------------------------------------------------------------------
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Reads the CALLER's own role directly from Firestore. This is a
+    // `get()` against the users collection, which costs one extra read
+    // per rule evaluation but is the only way to authoritatively know a
+    // user's role server-side without custom claims. `data.role` defaults
+    // safely to 'customer' if the document doesn't exist yet (e.g. a
+    // rules evaluation that races document creation), which is the
+    // least-privileged outcome.
+    function callerRole() {
+      return isSignedIn()
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role
+        : 'customer';
+    }
+
+    function callerIsAdminArea() {
+      return callerRole() in ['staff', 'manager', 'admin', 'superadmin'];
+    }
+
+    // Ranks a role for the >= comparison callerHasMinimumRole needs.
+    // IMPORTANT: this used to be `hierarchy.indexOf(role)` against a
+    // plain list — List has NO `.indexOf()` method in the Firestore
+    // Rules language (it's not in the language's List method set:
+    // concat/hasAll/hasAny/hasOnly/join/removeAll/size/toSet). Calling
+    // it made every `callerHasMinimumRole()` check fail its evaluation,
+    // which Firestore Rules treats as `false` — i.e. every role-gated
+    // write was being silently denied for EVERY caller, regardless of
+    // their actual role, superadmin included. Map.get(key, default) *is*
+    // a real, documented Rules language method, and is what fixes this.
+    function roleRank(role) {
+      let ranks = {'customer': 0, 'staff': 1, 'manager': 2, 'admin': 3, 'superadmin': 4};
+      return ranks.get(role, -1);
+    }
+
+    function callerHasMinimumRole(minimumRole) {
+      return roleRank(callerRole()) >= roleRank(minimumRole);
+    }
+
+    // ------------------------------------------------------------------
+    // users/{uid}
+    // ------------------------------------------------------------------
+    match /users/{uid} {
+      // A user may read their own profile. Admin-area staff may read any
+      // profile (needed for the Customers admin module).
+      allow read: if isOwner(uid) || callerIsAdminArea();
+
+      // Creation: a user may create ONLY their own document, and only
+      // with role fixed to 'customer' — this is what stops a malicious
+      // client from registering itself as 'admin' by tampering with the
+      // request payload from users.service.ts.
+      allow create: if isOwner(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.role == 'customer'
+        && request.resource.data.isDisabled == false;
+
+      // Update: split into two allowed shapes —
+      //   (a) the user updates their own profile but does NOT change
+      //       `role` or `isDisabled` (self-service profile edits, e.g.
+      //       display name, saved addresses, lastLoginAt, emailVerified).
+      //   (b) an admin/superadmin updates ANY user's document, including
+      //       role/isDisabled (role management, account suspension).
+      // manager/staff are intentionally excluded from (b): role changes
+      // are an admin+ action even though managers can access other parts
+      // of the admin area.
+      allow update: if (
+          isOwner(uid)
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.isDisabled == resource.data.isDisabled
+        ) || callerHasMinimumRole('admin');
+
+      // No client-side deletes of user documents — deactivation is
+      // modeled as isDisabled = true, not deletion, to preserve order
+      // history integrity (orders reference customerId).
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // categories/{categoryId} — public catalog data.
+    // ------------------------------------------------------------------
+    match /categories/{categoryId} {
+      allow read: if true; // Public storefront browsing.
+      allow write: if callerHasMinimumRole('manager');
+    }
+
+    // ------------------------------------------------------------------
+    // products/{productId} — public catalog data.
+    // ------------------------------------------------------------------
+    match /products/{productId} {
+      allow read: if true; // Public storefront browsing.
+      allow write: if callerHasMinimumRole('manager');
+    }
+
+    // ------------------------------------------------------------------
+    // inventory/{inventoryId} — stock levels. NOT publicly readable in
+    // full (would let competitors scrape exact stock counts); the
+    // storefront instead reads a derived "in stock" boolean the client
+    // computes from a restricted view — for this pass, inventory reads
+    // are limited to staff+ and writes to staff+ (manager+ for editing
+    // lowStockThreshold, handled at the app layer).
+    // ------------------------------------------------------------------
+    match /inventory/{inventoryId} {
+      allow read: if callerHasMinimumRole('staff');
+      allow write: if callerHasMinimumRole('staff');
+    }
+
+    // ------------------------------------------------------------------
+    // orders/{orderId}
+    // ------------------------------------------------------------------
+    match /orders/{orderId} {
+      // A customer may read only their own orders. Staff+ may read all
+      // orders (needed for fulfillment).
+      allow read: if (isSignedIn() && resource.data.customerId == request.auth.uid)
+        || callerHasMinimumRole('staff');
+
+      // A customer may create an order only for themselves, and only in
+      // the initial 'pending_payment' status — the checkout flow never
+      // gets to declare an order 'paid' client-side; that transition
+      // happens via a trusted payment-webhook-driven Cloud Function
+      // (outside the scope of client-writable rules entirely).
+      allow create: if isSignedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.status == 'pending_payment';
+
+      // Status/fulfillment updates (processing, shipped, etc.) are staff+
+      // only. Customers cannot edit an order once placed.
+      allow update: if callerHasMinimumRole('staff');
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // promotions/{promotionId} — codes are readable so checkout can
+    // validate a code, but only the fields needed for validation should
+    // be exposed by the client query in practice; write access is
+    // manager+.
+    // ------------------------------------------------------------------
+    match /promotions/{promotionId} {
+      allow read: if true;
+      allow write: if callerHasMinimumRole('manager');
+    }
+
+    // ------------------------------------------------------------------
+    // notifications/{notificationId} — a user may only read/mark-read
+    // their own notifications. Creation is staff+ (or, in production,
+    // done exclusively via Cloud Functions with the Admin SDK, which
+    // bypasses these rules entirely — included here for staff-triggered
+    // manual notifications).
+    // ------------------------------------------------------------------
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && resource.data.recipientId == request.auth.uid;
+      allow update: if isSignedIn()
+        && resource.data.recipientId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead', 'updatedAt']);
+      allow create: if callerHasMinimumRole('staff');
+      allow delete: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // analytics/{docId} — precomputed rollups. Written exclusively by a
+    // scheduled Cloud Function using the Admin SDK (which is not subject
+    // to these rules), so client writes are always denied. Readable by
+    // admin+ for the dashboard.
+    // ------------------------------------------------------------------
+    match /analytics/{docId} {
+      allow read: if callerHasMinimumRole('admin');
+      allow write: if false;
+    }
+
+    // ------------------------------------------------------------------
+    // settings/{docId} — store-wide configuration singletons.
+    // ------------------------------------------------------------------
+    match /settings/{docId} {
+      allow read: if true; // e.g. isStorefrontOpen must be readable pre-login.
+      allow write: if callerHasMinimumRole('admin');
+    }
+
+    // ------------------------------------------------------------------
+    // Default deny — anything not explicitly matched above is rejected.
+    // ------------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

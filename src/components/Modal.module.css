@@ -1,0 +1,68 @@
+/* Modal shell. The panel gets the LARGE shadow — modals are one of the
+   few genuinely prominent surfaces where that weight is earned. The
+   scrim stays a flat black wash (no blur) so the panel's hard edges
+   stay crisp against it. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 16, 14, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.panel {
+  width: 100%;
+  max-width: 520px;
+  background: var(--color-surface-raised);
+  border: var(--border-strong-thick);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-brutal-lg);
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-bottom: var(--border-strong);
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  border: var(--border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-press);
+}
+
+.closeButton:hover {
+  background: var(--color-danger-soft);
+}
+
+.closeButton:active {
+  transform: translate(1px, 1px);
+}
+
+.body {
+  padding: var(--space-5);
+}

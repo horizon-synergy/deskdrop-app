@@ -1,0 +1,94 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-6);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebarTitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-2);
+}
+
+.categoryButton,
+.categoryButtonActive {
+  text-align: left;
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: none;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.categoryButton {
+  color: var(--color-text-primary);
+}
+
+.categoryButton:hover {
+  background: var(--color-surface);
+}
+
+.categoryButtonActive {
+  background: var(--color-text-primary);
+  color: var(--color-on-accent);
+  font-weight: 500;
+}
+
+.main {
+  min-width: 0;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-5);
+}
+
+.errorText {
+  font-size: 14px;
+  color: var(--color-danger);
+}
+
+.emptyState {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-5);
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}

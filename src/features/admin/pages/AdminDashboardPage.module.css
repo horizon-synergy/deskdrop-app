@@ -1,0 +1,93 @@
+/* Admin dashboard module grid. Cards that link somewhere get the lift
+   interaction; cards for modules the user's role can't reach are
+   flattened and desaturated so the difference is obvious at a glance
+   without needing an explanatory icon or colour. */
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: var(--space-7) var(--space-6);
+}
+
+.header {
+  max-width: 960px;
+  margin: 0 auto var(--space-6);
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--space-2);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.roleBadge {
+  display: inline-block;
+  text-transform: uppercase;
+  background: var(--color-accent-soft);
+  border: var(--border-width) solid var(--color-ink);
+  padding: 1px var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.moduleGrid {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.moduleLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.moduleCard {
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  height: 100%;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press);
+}
+
+.moduleLink:hover .moduleCard {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.moduleLink:active .moduleCard {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+.moduleCard[aria-disabled='true'] {
+  background: var(--color-surface);
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.moduleName {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-1);
+}
+
+.moduleStatus {
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}

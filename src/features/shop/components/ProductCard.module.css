@@ -1,0 +1,65 @@
+/* Product grid tile. Cards are the most-repeated element in the app, so
+   they use the SMALL shadow rather than the default — a grid of 12 cards
+   each throwing a 4px shadow reads as noise. On hover the card lifts
+   (shadow grows, card moves up-left), which is the inverse of the press
+   interaction and keeps the physical metaphor consistent. */
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press);
+}
+
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal);
+}
+
+.card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+/* Image sits in its own bordered well so product photography (which we
+   don't control — it comes from suppliers) can't blow out the card's
+   edges or blend into the white surface. */
+.imageWrapper {
+  aspect-ratio: 1;
+  border: var(--border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-surface);
+  margin-bottom: var(--space-3);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface);
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0;
+}

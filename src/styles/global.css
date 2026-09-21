@@ -1,0 +1,205 @@
+/**
+ * global.css
+ * ----------------------------------------------------------------------------
+ * App-wide CSS custom properties (design tokens) and base element resets.
+ * This is the ONLY global stylesheet in the app — everything else is a
+ * colocated CSS Module that reads these tokens via var(). Because of
+ * that, this one file drives the entire app's visual identity: changing
+ * a value here re-themes every screen at once.
+ *
+ * DESIGN DIRECTION: MINIMAL NEOBRUTALISM
+ * --------------------------------------
+ * Neobrutalism done calmly rather than loudly. The principles this file
+ * encodes, and the reasoning behind each:
+ *
+ *   1. HARD BORDERS ARE THE STRUCTURE. Every surface is outlined in a
+ *      solid near-black border (--border-strong / --border-strong-thick).
+ *      This is the single most load-bearing neobrutalist signal. A border
+ *      here is structure, not a subtle divider — which is why
+ *      --color-ink is near-black rather than the light grey a
+ *      conventional UI would use.
+ *   2. FLAT OFFSET SHADOWS, ZERO BLUR. --shadow-brutal-* are hard
+ *      `Npx Npx 0` drops in solid ink. Blur is the signature of soft UI
+ *      and directly fights this aesthetic, so it appears nowhere — no
+ *      box-shadow blur, no backdrop-filter.
+ *   3. RESTRAINED COLOR — this is the "minimal, not cluttered"
+ *      constraint. Neobrutalism often goes maximalist, throwing a
+ *      different saturated fill at every panel. We deliberately don't:
+ *      one warm off-white canvas, near-black ink, and a SMALL set of
+ *      flat accents reserved for MEANING (primary action, success,
+ *      danger, warning) — never decoration. Accents are muted rather
+ *      than neon so long admin sessions stay comfortable, which is what
+ *      keeps the result "calm" while still unmistakably brutalist.
+ *   4. TIGHT, NOT ROUND. Small radii (4–8px). Only badges go fully
+ *      round (--radius-full).
+ *   5. NO GRADIENTS, NO TRANSLUCENCY on content surfaces. Anything
+ *      atmospheric is replaced with a flat fill. (Modal scrims are the
+ *      one deliberate exception — a scrim must be see-through to do its
+ *      job.)
+ *   6. TYPE CARRIES THE HIERARCHY. Heavier weights and tighter tracking
+ *      do the work, so color doesn't have to. This is what lets
+ *      principle 3 hold without the UI going flat and unreadable.
+ *   7. CONTROLS FEEL PHYSICAL. Interactive elements sit on an offset
+ *      shadow and translate INTO it when pressed (--transition-press),
+ *      so a click reads as a physical depression rather than a fade.
+ */
+
+:root {
+  /* --- Ink & canvas -------------------------------------------------- */
+  /* Warm off-white rather than pure white: softer over long sessions,
+     and it makes the black borders read as intentional, not harsh. */
+  --color-bg: #fdfcf7;
+  --color-surface: #f6f4ec;
+  --color-surface-raised: #ffffff;
+
+  /* The single near-black used for all borders, shadows and body text.
+     Kept as its own token (rather than reusing text-primary) because
+     it's a *structural* color — if the theme ever softens its text, the
+     borders should not soften with it. */
+  --color-ink: #12100e;
+  --color-border: var(--color-ink);
+
+  --color-text-primary: var(--color-ink);
+  --color-text-secondary: #5c5a53;
+
+  /* Text placed ON a saturated accent fill. */
+  --color-on-accent: #ffffff;
+
+  /* --- Border weights ------------------------------------------------ */
+  /* Full shorthand tokens so modules can write `border: var(--border-strong)`
+     in one declaration and stay consistent app-wide. */
+  --border-width: 2px;
+  --border-width-thick: 3px;
+  --border-strong: var(--border-width) solid var(--color-ink);
+  --border-strong-thick: var(--border-width-thick) solid var(--color-ink);
+
+  /* --- Flat accents (meaning only, never decoration) ------------------ */
+  /* Each accent pairs a saturated fill with a desaturated "soft" tint
+     used for badge/banner backgrounds, so state is legible without
+     shouting.
+     ⚠️ KEEP IN SYNC: Recharts renders SVG and cannot read CSS custom
+     properties, so --color-accent and --color-ink are duplicated as
+     literal hex at two call sites — AdminReportsPage.tsx (<Bar>) and
+     AdminAnalyticsPage.tsx (<Line>). If you change either value here,
+     change it there too or the charts will drift off-palette. */
+  --color-accent: #2b5cff;
+  --color-accent-hover: #1f47d6;
+  --color-accent-soft: #dde5ff;
+
+  --color-danger: #d92d20;
+  --color-danger-soft: #fbe3e1;
+
+  --color-success: #2f7a4d;
+  --color-success-soft: #ddeee3;
+
+  --color-warning: #b4530a;
+  --color-warning-soft: #fbe9d8;
+
+  /* --- Typography ---------------------------------------------------- */
+  /* Inter is loaded in index.html at weights 400/600/700/800. The heavy
+     weights are deliberate: this system uses type weight (not color) to
+     carry hierarchy, and synthesised fake-bold looks smeared at display
+     sizes. Falls back to the system UI stack if the webfont fails. */
+  --font-family-base:
+    'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+
+  /* --- Spacing (4px base unit) --------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* --- Radii: tight, not round --------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 999px;
+
+  /* --- Elevation: hard offset, zero blur ------------------------------ */
+  /* Note the `0` blur radius in every one of these — that's the whole
+     point. --shadow-pressed is what an element moves to while active. */
+  --shadow-brutal-sm: 2px 2px 0 var(--color-ink);
+  --shadow-brutal: 4px 4px 0 var(--color-ink);
+  --shadow-brutal-lg: 6px 6px 0 var(--color-ink);
+  --shadow-pressed: 1px 1px 0 var(--color-ink);
+
+  /* Legacy aliases kept so any module still referencing the previous
+     naming renders correctly rather than silently losing its shadow. */
+  --shadow-sm: var(--shadow-brutal-sm);
+  --shadow-md: var(--shadow-brutal);
+
+  /* --- Motion --------------------------------------------------------- */
+  /* Short and mechanical. Long eased transitions feel soft; these snap. */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 110ms;
+  --transition-press:
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings carry the emphasis in this system (principle 6), so they're
+   set heavier and tighter than a default UI stack would be. 800 is
+   deliberate — see the --font-family-base comment on why the real heavy
+   weight is loaded rather than synthesised. */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+/* Accessible focus ring. A soft glow would look wrong in a hard-edged
+   system, so focus is a solid offset outline matching the border
+   language. Never remove this without an equally visible replacement —
+   keyboard users depend on it. */
+:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Respect users who've asked their OS to reduce motion: the press
+   effect is decorative, so it's dropped entirely rather than shortened. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

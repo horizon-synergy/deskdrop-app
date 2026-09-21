@@ -1,0 +1,37 @@
+/* Primary action button — the reference implementation of this system's
+   press interaction. On :active the button translates toward its shadow
+   and the shadow shrinks to match, so it reads as physically pressed
+   rather than fading/scaling like a soft-UI button would. Every other
+   button in the app follows this same pattern. */
+.button {
+  width: 100%;
+  padding: 12px var(--space-4);
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  box-shadow: var(--shadow-brutal);
+  transition: var(--transition-press), background-color 0.12s linear;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.button:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+/* Disabled state drops the shadow entirely — a floating-but-inert
+   control is confusing, flattening it makes "not available" obvious. */
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: translate(4px, 4px);
+}

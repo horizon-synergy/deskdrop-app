@@ -1,0 +1,238 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+  padding: var(--space-7) var(--space-6);
+}
+
+.header {
+  max-width: 1080px;
+  margin: 0 auto var(--space-5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px var(--space-4);
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.primaryButton:hover {
+  background: var(--color-accent-hover);
+}
+
+.toolbar {
+  max-width: 1080px;
+  margin: 0 auto var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 220px;
+  padding: 9px var(--space-3);
+  border-radius: var(--radius-md);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  font-size: 13.5px;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 6px;
+}
+
+.filterButton,
+.filterButtonActive {
+  padding: 7px var(--space-3);
+  border-radius: var(--radius-full);
+  border: var(--border-strong);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filterButton {
+  background: var(--color-surface-raised);
+  color: var(--color-text-secondary);
+}
+
+.filterButtonActive {
+  background: var(--color-ink);
+  color: var(--color-on-accent);
+  border-color: var(--color-text-primary);
+}
+
+.errorText {
+  max-width: 1080px;
+  margin: 0 auto var(--space-4);
+  font-size: 13.5px;
+  color: var(--color-danger);
+}
+
+.emptyState {
+  max-width: 1080px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--color-surface-raised);
+  border: var(--border-width) dashed var(--color-ink);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-brutal);
+  font-size: 13.5px;
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: var(--border-strong-thick);
+  background: var(--color-surface);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-strong);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.productCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 500;
+}
+
+.thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.thumbPlaceholder {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.mutedCell {
+  color: var(--color-text-secondary);
+}
+
+.status_draft,
+.status_active,
+.status_archived {
+  font-size: 11.5px;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  border: var(--border-width) solid var(--color-ink);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status_draft {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+}
+
+.status_active {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.status_archived {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+.actionsCell {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.iconButton,
+.iconButtonDanger {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press);
+  text-decoration: none;
+}
+
+.iconButton {
+  color: var(--color-text-primary);
+}
+
+.iconButtonDanger {
+  color: var(--color-danger);
+}
+
+.iconButton:hover {
+  background: var(--color-surface);
+}
+
+.iconButtonDanger:hover {
+  background: var(--color-danger-soft);
+}

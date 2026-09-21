@@ -1,0 +1,24 @@
+/* Form-level messages. Flat tint + hard border + bold text — no icon, no
+   gradient, no blur. The border does the work of separating it from the
+   form, so the fill can stay pale and calm. */
+.error,
+.success {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--border-strong);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.error {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.success {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}

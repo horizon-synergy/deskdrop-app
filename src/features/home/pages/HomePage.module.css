@@ -1,0 +1,65 @@
+/* Homepage hero. This is the one screen where the aesthetic is allowed
+   to be most expressive — but it still resolves to: one accent element
+   (the CTA), one bordered panel, lots of air. No decorative color
+   blocking, no pattern fills. */
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.hero {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-7);
+  text-align: center;
+}
+
+/* Oversized, tightly tracked, heavy — the defining typographic moment of
+   the app. clamp() keeps it impactful on desktop without overflowing on
+   small screens. */
+.heroTitle {
+  font-size: clamp(34px, 6vw, 56px);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0 0 var(--space-4);
+}
+
+.heroSubtitle {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0 auto var(--space-6);
+  max-width: 52ch;
+}
+
+/* The single accent CTA on the page. Square-ish rather than pill: this
+   system's primary actions are rectangular and weighty. */
+.heroCta {
+  display: inline-block;
+  padding: 15px var(--space-6);
+  border: var(--border-strong-thick);
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-brutal-lg);
+  transition: var(--transition-press), background-color 0.12s linear;
+}
+
+.heroCta:hover {
+  background: var(--color-accent-hover);
+}
+
+.heroCta:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: var(--space-7) var(--space-4) var(--space-6);
+  }
+}

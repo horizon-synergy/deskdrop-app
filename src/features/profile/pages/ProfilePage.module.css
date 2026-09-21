@@ -1,0 +1,111 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+  display: flex;
+  justify-content: center;
+  padding: var(--space-7) var(--space-4);
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-surface-raised);
+  border: var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.title {
+  margin: 0 0 var(--space-5);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.detailList {
+  margin: 0 0 var(--space-5);
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: var(--border-strong);
+  font-size: 14px;
+}
+
+.detailRow dt {
+  color: var(--color-text-secondary);
+}
+
+.detailRow dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.roleBadge {
+  text-transform: capitalize;
+  background: var(--color-surface);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: 12.5px;
+}
+
+.verifyBanner {
+  background: var(--color-warning-soft);
+  border: var(--border-strong);
+  color: var(--color-warning);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 13px;
+  margin-bottom: var(--space-4);
+  line-height: 1.5;
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 4px;
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.verifySent {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.errorText {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin: 0 0 var(--space-4);
+}
+
+.signOutButton {
+  width: 100%;
+  padding: 11px var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-danger);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.signOutButton:hover:not(:disabled) {
+  background: var(--color-danger-soft);
+}
+
+.signOutButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

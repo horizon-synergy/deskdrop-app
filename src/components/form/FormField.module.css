@@ -1,0 +1,54 @@
+/* Shared input styling (FormField, TextAreaField, SelectField all use
+   this module). Inputs get the same heavy border as everything else, but
+   sit FLAT by default — no shadow — and gain an inset-feeling accent
+   ring only on focus. Giving every input a permanent offset shadow makes
+   forms feel busy, which is exactly the clutter this direction avoids. */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.005em;
+}
+
+.input {
+  padding: 11px var(--space-3);
+  font-size: 15px;
+  font-family: inherit;
+  border-radius: var(--radius-md);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  transition: box-shadow 0.1s linear, border-color 0.1s linear;
+}
+
+.input:focus {
+  outline: none;
+  /* Hard offset shadow in the accent, not a soft glow — keeps the focus
+     state consistent with the rest of the shadow language. */
+  box-shadow: var(--shadow-brutal-sm);
+  border-color: var(--color-accent);
+}
+
+.inputError {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.inputError:focus {
+  border-color: var(--color-danger);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.errorText {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-danger);
+}

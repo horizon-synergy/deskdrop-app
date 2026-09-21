@@ -1,0 +1,42 @@
+/* Google / GitHub buttons. Neutral-filled with the standard border and
+   press interaction — they're alternatives to the primary action, so
+   they deliberately don't take the accent. */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.oauthButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 11px var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-press), background-color 0.12s linear;
+}
+
+.oauthButton:hover:not(:disabled) {
+  background: var(--color-surface);
+}
+
+.oauthButton:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+
+.oauthButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}

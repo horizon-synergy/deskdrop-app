@@ -1,0 +1,49 @@
+/* Auth screens (Login / Register / Forgot Password). A single bordered
+   card on the warm canvas — the calmest possible expression of the
+   system, which suits a screen where the only job is "fill this in". */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-bg);
+}
+
+.brandBar {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: var(--space-5);
+}
+
+.brandLink {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface-raised);
+  border: var(--border-strong-thick);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-brutal-lg);
+  padding: var(--space-6) var(--space-5);
+}
+
+.title {
+  margin: 0 0 var(--space-2);
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  margin: 0 0 var(--space-5);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
