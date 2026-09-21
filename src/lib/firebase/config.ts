@@ -8,15 +8,15 @@
  * up the Firestore emulator for local development in a single spot later.
  */
 
-import { initializeApp, type FirebaseOptions } from 'firebase/app';
+import { initializeApp, type FirebaseOptions } from "firebase/app";
 import {
   getAuth,
   browserLocalPersistence,
   setPersistence,
   GoogleAuthProvider,
   GithubAuthProvider,
-} from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 /**
  * Read config from Vite's `import.meta.env`. All of these are `VITE_`-
@@ -27,15 +27,38 @@ import { getFirestore } from 'firebase/firestore';
  * otherwise surface as confusing runtime errors deep inside the SDK.
  */
 
+function requireEnv(name: string, value: string | undefined): string {
+  if (!value) {
+    throw new Error(
+      `Missing required environment variable ${name}. Copy .env.example to ` +
+        ".env.local and fill in your Firebase web app config.",
+    );
+  }
+  return value;
+}
+
+const env = import.meta.env;
 
 const firebaseConfig: FirebaseOptions = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: requireEnv("VITE_FIREBASE_API_KEY", env.VITE_FIREBASE_API_KEY),
+  authDomain: requireEnv(
+    "VITE_FIREBASE_AUTH_DOMAIN",
+    env.VITE_FIREBASE_AUTH_DOMAIN,
+  ),
+  projectId: requireEnv(
+    "VITE_FIREBASE_PROJECT_ID",
+    env.VITE_FIREBASE_PROJECT_ID,
+  ),
+  storageBucket: requireEnv(
+    "VITE_FIREBASE_STORAGE_BUCKET",
+    env.VITE_FIREBASE_STORAGE_BUCKET,
+  ),
+  messagingSenderId: requireEnv(
+    "VITE_FIREBASE_MESSAGING_SENDER_ID",
+    env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  ),
+  appId: requireEnv("VITE_FIREBASE_APP_ID", env.VITE_FIREBASE_APP_ID),
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);
@@ -64,6 +87,6 @@ void setPersistence(auth, browserLocalPersistence);
  * wants to switch accounts.
  */
 export const googleAuthProvider = new GoogleAuthProvider();
-googleAuthProvider.setCustomParameters({ prompt: 'select_account' });
+googleAuthProvider.setCustomParameters({ prompt: "select_account" });
 
 export const githubAuthProvider = new GithubAuthProvider();
