@@ -29,13 +29,13 @@ import { getFirestore } from 'firebase/firestore';
 
 
 const firebaseConfig: FirebaseOptions = {
-  apiKey: "AIzaSyBbM0InDkUPaBmrSsQ-upnPg7essEDPiAo",
-  authDomain: "deskdrop-hs.firebaseapp.com",
-  projectId: "deskdrop-hs",
-  storageBucket: "deskdrop-hs.firebasestorage.app",
-  messagingSenderId: "373292223778",
-  appId: "1:373292223778:web:abed09ce9e49415f55a97b",
-  measurementId: "G-BP94RX4ELB",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);

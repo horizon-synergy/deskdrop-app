@@ -30,8 +30,8 @@ const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 export class UploadServiceError extends Error {}
 
 function getCloudinaryConfig(): { cloudName: string; uploadPreset: string } {
-  const cloudName = "cj8iwl4l";
-  const uploadPreset = "deskdrop";
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   if (!cloudName || !uploadPreset) {
     throw new UploadServiceError(
       'Cloudinary is not configured. Set VITE_CLOUDINARY_CLOUD_NAME and ' +
