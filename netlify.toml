@@ -2,6 +2,29 @@
   command = "npm run build"
   publish = "dist"
 
+# Secrets scanning
+#
+# Every variable below is *client-side* Firebase/Cloudinary configuration.
+# Vite inlines any VITE_-prefixed variable into the JavaScript bundle by
+# design, so these values are necessarily present in `dist` and visible to
+# anyone loading the site — they are public identifiers, not credentials:
+#
+#   - The Firebase web API key identifies the project when talking to
+#     Google's APIs. It grants no access on its own; access is enforced by
+#     Firestore security rules (see firestore.rules) and by the authorized
+#     domains list in the Firebase console.
+#   - The Cloudinary cloud name and *unsigned* upload preset are meant to be
+#     used from the browser. The Cloudinary API secret is never shipped to
+#     the client (see src/lib/cloudinary/upload.service.ts for the rationale
+#     and the restrictions configured on the preset).
+#
+# We omit these specific keys rather than setting SECRETS_SCAN_ENABLED=false
+# so that scanning stays active and would still catch a genuine secret (an
+# API secret, service-account key, or database URL) if one ever landed in a
+# commit or in the build output.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_AUTH_DOMAIN,VITE_FIREBASE_PROJECT_ID,VITE_FIREBASE_STORAGE_BUCKET,VITE_FIREBASE_MESSAGING_SENDER_ID,VITE_FIREBASE_APP_ID,VITE_FIREBASE_MEASUREMENT_ID,VITE_CLOUDINARY_CLOUD_NAME,VITE_CLOUDINARY_UPLOAD_PRESET"
+
 
 # SPA Redirects (React/Vue/Vite Router Support)
 [[redirects]]
